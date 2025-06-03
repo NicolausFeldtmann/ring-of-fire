@@ -1,0 +1,60 @@
+@import './../../styles.scss';
+
+.start-screen{
+    @include dFlex();
+    background-color: rgb(6, 125, 43);
+    width: 100vw;
+    height: 100vh;
+    max-width: 100%;
+}
+
+.screen-content{
+    @include dFlex($fd: row);
+    height: 75%;
+    width: 75%;
+
+    .message-section{
+        @include dFlex();
+        width: 100%;
+        height: 100%;
+        max-width: 600px;
+        background-color: rgb(255, 193, 0);
+        z-index: 5;
+        border-radius: 10px;
+
+        .message-content{
+            @include dFlex();
+
+            .message{
+                font-size: 80px
+            }
+        }
+    }
+
+    .decorations-left{
+        @include dFlex();
+        position: relative;
+        left: 64px;
+
+        .deco-card-left{
+            rotate: -36deg;
+            width: 136px;
+        }
+    }
+
+    .decorations-right{
+        @include dFlex();
+        position: relative;
+        right: 64px;
+
+        .deco-card-right{
+            rotate: +36deg;
+            width: 136px;
+        }
+    }
+}
+
+
+
+
+
