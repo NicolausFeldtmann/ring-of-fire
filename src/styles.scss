@@ -8,3 +8,16 @@ body{
     align-items: $ai;
     flex-direction: $fd;
 }
+
+
+@font-face {
+  font-display: swap; 
+  font-family: 'Merienda';
+  font-style: normal;
+  font-weight: normal;
+  src: url('./assets/fonts/Merienda/Merienda-VariableFont_wght.ttf') format('woff2'); 
+}
+
+  .fontMerienda{
+    font-family: "Merienda";
+  }
