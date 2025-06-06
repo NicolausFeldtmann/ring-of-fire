@@ -1,0 +1,18 @@
+@import './../../styles.scss';
+
+.player{
+    @include dFlex($fd: row);
+    background-color: white;
+    border-radius: 50px;
+    span{
+        font-size: 32px;
+        margin: 0px 16px 0px 16px;
+    }
+
+    .avatar{
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 100%;
+    }
+}
