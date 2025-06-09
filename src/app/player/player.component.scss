@@ -2,17 +2,23 @@
 
 .player{
     @include dFlex($fd: row);
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.664);
     border-radius: 50px;
+
     span{
         font-size: 32px;
         margin: 0px 16px 0px 16px;
     }
 
     .avatar{
-        width: 100px;
-        height: 100px;
+        width: 70px;
+        height: 70px;
         object-fit: cover;
         border-radius: 100%;
     }
+}
+
+.player-active{
+    background-color: rgba(17, 89, 141, 0.561) !important;
+    color: white;
 }

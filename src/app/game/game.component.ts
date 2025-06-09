@@ -38,8 +38,6 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    console.log(this.game);
-    
   }
 
   pickCard() {
