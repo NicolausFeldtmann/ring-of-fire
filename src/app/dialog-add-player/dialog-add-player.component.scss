@@ -1,0 +1,14 @@
+@import './../../styles.scss';
+
+.btn-section{
+    @include dFlex($fd: row);
+    .btn{
+        background-color: rgb(44, 134, 194);
+        color: white;
+        font-size: 34px;
+        border: none;
+        border-radius: 15px;
+        pad: 8px 8px 8px 8px;
+        margin: 8px 8px 8px 8px;
+    }
+}

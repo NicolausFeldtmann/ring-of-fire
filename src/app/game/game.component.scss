@@ -78,3 +78,11 @@
     }
 
 }
+
+@media screen and (max-width: 500px) {
+
+    .pin-bottom{
+        top: 32px;
+        bottom: auto;
+    }
+}

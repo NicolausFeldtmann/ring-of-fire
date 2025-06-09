@@ -6,8 +6,8 @@
     <input matInput [(ngModel)]="name" />
   </mat-form-field>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button matButton >No Thanks</button>
-  <button matButton [mat-dialog-close]="name" cdkFocusInitial>Ok</button>
+<mat-dialog-actions class="btn-section">
+  <button class="btn" (click)="onNoClick()" >No Thanks</button>
+  <button class="btn" [disabled]="name.length == 0" [mat-dialog-close]="name" cdkFocusInitial>Ok</button>
 </mat-dialog-actions>
 

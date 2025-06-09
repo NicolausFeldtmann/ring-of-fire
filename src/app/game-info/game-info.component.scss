@@ -3,3 +3,10 @@
 .info-content{
     padding: 12px 12px 12px 12px;
 }
+
+@media screen and (max-width: 500px) {
+
+    .pin-button{
+        top: 32px;
+    }
+}
