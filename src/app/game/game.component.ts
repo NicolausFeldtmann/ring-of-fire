@@ -5,6 +5,8 @@ import { PlayerComponent } from '../player/player.component';
 
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialog} from '@angular/material/dialog';
+import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 
 
 @Component({
@@ -14,7 +16,7 @@ import {MatIconModule} from '@angular/material/icon';
     CommonModule,
     PlayerComponent,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
   ],
   templateUrl: './game.component.html',
   styleUrl: './game.component.scss'
@@ -26,7 +28,7 @@ export class GameComponent implements OnInit {
   playedCards: string = '';
   game: Game = new Game;
 
-  constructor(){
+  constructor(public dialog: MatDialog){
   }
 
 
@@ -51,5 +53,14 @@ export class GameComponent implements OnInit {
       }, 1000);
     }
   }
+
+    openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddPlayerComponent);
+
+    dialogRef.afterClosed().subscribe((name: string) => {
+      this.game.players.push(name);
+    });
+  }
+
 }
 
