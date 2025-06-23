@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Game } from '../../models/game';
 import { PlayerComponent } from '../player/player.component';
 
@@ -8,6 +8,8 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
+import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+
 
 
 @Component({
@@ -30,12 +32,21 @@ export class GameComponent implements OnInit {
   playedCards: string = '';
   game: Game = new Game;
 
+  games$: any;
+  games: any;
+
+  firestore: Firestore = inject(Firestore);
+
   constructor(public dialog: MatDialog){
   }
 
 
   ngOnInit(): void {
     this.newGame();
+    this.games$ = collectionData(this.getGamesRef());
+    this.games = this.games$.subscribe((game: any) => {
+      console.log(game);
+    })
   }
 
   newGame() {
@@ -63,6 +74,10 @@ export class GameComponent implements OnInit {
         this.game.players.push(name);
       }
     });
+  }
+
+  getGamesRef() {
+    return collection(this.firestore, 'games');
   }
 
 }
