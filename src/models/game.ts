@@ -1,4 +1,10 @@
 export class Game {
+    add(arg0: { Hallo: string; }): Game {
+      throw new Error('Method not implemented.');
+    }
+    addDoc(p0: string, p1: string): Game {
+      throw new Error('Method not implemented.');
+    }
     public players: string[] = [];
     public stack: string[] = [];
     public playedCards: string[] = [];
@@ -13,7 +19,17 @@ export class Game {
         }
         shuffle(this.stack); 
     }
+
+    public toJson() {
+        return {
+            players: this.players,
+            stack: this.stack,
+            playedCards: this.playedCards,
+            currentPlayer: this.currentPlayer
+        }
+    }
 }
+
 
 function shuffle(array: string[]) {
     let currentIndex = array.length, temporaryValue, randomIndex;

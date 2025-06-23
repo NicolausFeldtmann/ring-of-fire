@@ -8,7 +8,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
-import { Firestore, collection, collectionData } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, doc } from '@angular/fire/firestore';
 
 
 
@@ -45,12 +45,13 @@ export class GameComponent implements OnInit {
     this.newGame();
     this.games$ = collectionData(this.getGamesRef());
     this.games = this.games$.subscribe((game: any) => {
-      console.log(game);
+      console.log('Game update', game);
     })
   }
 
   newGame() {
     this.game = new Game();
+    this.updateGame()
   }
 
   pickCard() {
@@ -80,5 +81,9 @@ export class GameComponent implements OnInit {
     return collection(this.firestore, 'games');
   }
 
+  async updateGame() {
+    let gameData = this.game.toJson();
+    let docRef = await addDoc(collection(this.firestore, 'games'), gameData);
+  }
 }
 
