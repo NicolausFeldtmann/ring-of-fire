@@ -9,6 +9,7 @@ import {MatDialog} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
 import { Firestore, collection, collectionData, addDoc, doc } from '@angular/fire/firestore';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -37,21 +38,30 @@ export class GameComponent implements OnInit {
 
   firestore: Firestore = inject(Firestore);
 
-  constructor(public dialog: MatDialog){
+  constructor(private rout: ActivatedRoute, public dialog: MatDialog){
   }
 
 
   ngOnInit(): void {
-    this.newGame();
-    this.games$ = collectionData(this.getGamesRef());
-    this.games = this.games$.subscribe((game: any) => {
-      console.log('Game update', game);
-    })
+    //this.newGame();
+    this.rout.params.subscribe((params) => {
+      console.log(params['id']);
+      this.games$ = collectionData(this.getGamesRef());
+      this.games = this.games$.subscribe((gamesArray: any[]) => {
+        if (gamesArray.length > 0) {
+          let gameFromDb = gamesArray[0];
+          this.game.currentPlayer = gameFromDb.currentPlayer;
+          this.game.playedCards = gameFromDb.playedCards;
+          this.game.players = gameFromDb.players;
+          this.game.stack = gameFromDb.stack;
+        }
+      })
+    });
   }
 
   newGame() {
     this.game = new Game();
-    this.updateGame()
+    //this.updateGame()
   }
 
   pickCard() {
