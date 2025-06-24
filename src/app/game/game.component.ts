@@ -8,7 +8,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogAddPlayerComponent } from '../dialog-add-player/dialog-add-player.component';
 import { GameInfoComponent } from '../game-info/game-info.component';
-import { Firestore, collection, collectionData, addDoc, doc } from '@angular/fire/firestore';
+import { Firestore, collection, collectionData, addDoc, doc, updateDoc } from '@angular/fire/firestore';
 import { ActivatedRoute } from '@angular/router';
 
 
@@ -35,6 +35,7 @@ export class GameComponent implements OnInit {
 
   games$: any;
   games: any;
+  gameId: any;
 
   firestore: Firestore = inject(Firestore);
 
@@ -46,6 +47,7 @@ export class GameComponent implements OnInit {
     //this.newGame();
     this.rout.params.subscribe((params) => {
       console.log(params['id']);
+      this.gameId = params['id'];
       this.games$ = collectionData(this.getGamesRef());
       this.games = this.games$.subscribe((gamesArray: any[]) => {
         if (gamesArray.length > 0) {
@@ -61,18 +63,20 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    //this.updateGame()
   }
 
   pickCard() {
     if(!this.pickCardAnimation) {
       this.currentCard = this.game.stack.pop() as string;
       this.pickCardAnimation = true;
+      this.saveGame();
+
       this.game.currentPlayer++;
       this.game.currentPlayer = this.game.currentPlayer % this.game.players.length;
       setTimeout(() => {
         this.game.playedCards.push(this.currentCard);
         this.pickCardAnimation = false;
+        this.saveGame();
       }, 1000);
     }
   }
@@ -83,6 +87,7 @@ export class GameComponent implements OnInit {
     dialogRef.afterClosed().subscribe((name: string) => {
       if(name && name.length > 0) {
         this.game.players.push(name);
+        this.saveGame();
       }
     });
   }
@@ -91,9 +96,9 @@ export class GameComponent implements OnInit {
     return collection(this.firestore, 'games');
   }
 
-  async updateGame() {
-    let gameData = this.game.toJson();
-    let docRef = await addDoc(collection(this.firestore, 'games'), gameData);
+  saveGame() {
+    let gameRef = doc(this.firestore, 'games', this.gameId);
+    updateDoc(gameRef, this.game.toJson());
   }
 }
 
